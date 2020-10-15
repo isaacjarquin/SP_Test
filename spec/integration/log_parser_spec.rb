@@ -37,4 +37,39 @@ describe LogParser do
       end
     end
   end
+
+  describe 'List of unique pages view' do
+    subject(:parse_unique_visits) { log_parser.parse_unique_visits }
+
+    let(:log_path) { 'spec/fixtures/webserver_fixture.log' }
+    let(:output_formatter) { LogParser::UniqPageViewsOutputFormatter }
+
+    let(:ordered_visits) do
+      [
+        '/about/2 5 uniq visits',
+        '/contact 4 uniq visits',
+        '/index 3 uniq visits'
+      ]
+    end
+
+    it 'returns a unique list order from higher to lower' do
+      expect(parse_unique_visits).to eql(ordered_visits)
+    end
+
+    context 'Given file does not exist' do
+      let(:log_path) { 'non/existing/file.log' }
+
+      it 'raises FileMissingError' do
+        expect { parse_unique_visits }.to raise_error LogParser::FileMissingError
+      end
+    end
+
+    context 'Given no argument supplied' do
+      let(:log_path) { nil }
+
+      it 'raises an ArgumentError' do
+        expect { LogParser.new }.to raise_error ArgumentError
+      end
+    end
+  end
 end

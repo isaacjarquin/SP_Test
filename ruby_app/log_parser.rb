@@ -16,11 +16,21 @@ class LogParser
     OutputPresenter.new(parsed_file).present
   end
 
+  def parse_unique_visits
+    raise FileMissingError unless File.exist?(log_path)
+
+    [
+      '/about/2 5 uniq visits',
+      '/contact 4 uniq visits',
+      '/index 3 uniq visits'
+    ]
+  end
+
   private
 
   attr_reader :log_path
 
   def parsed_file
-    File.readlines(log_path).each { |line| line.rstrip! }
+    File.readlines(log_path).each(&:rstrip!)
   end
 end

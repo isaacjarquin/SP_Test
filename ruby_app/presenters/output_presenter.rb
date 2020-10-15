@@ -1,5 +1,7 @@
+# frozen_string_literal: true
 
 class LogParser
+  # It presents the expected output into a more human readable output
   class OutputPresenter
     def initialize(parsed_file)
       @parsed_file = parsed_file
