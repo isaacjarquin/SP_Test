@@ -6,11 +6,11 @@ require_relative '../../ruby_app/presenters/uniq_visits_output_presenter.rb'
 
 describe LogParser do
   let(:log_parser) { LogParser.new(log_path, output_presenter) }
+  let(:log_path) { 'spec/fixtures/webserver_fixture.log' }
 
   describe 'List of Web page visits' do
     subject(:parse_visits) { log_parser.parse }
 
-    let(:log_path) { 'spec/fixtures/webserver_fixture.log' }
     let(:output_presenter) do
       LogParser::TotalVisitsOutputPresenter
     end
@@ -34,20 +34,11 @@ describe LogParser do
         expect { parse_visits }.to raise_error LogParser::FileMissingError
       end
     end
-
-    context 'Given no argument supplied' do
-      let(:log_path) { nil }
-
-      it 'raises an ArgumentError' do
-        expect { LogParser.new }.to raise_error ArgumentError
-      end
-    end
   end
 
   describe 'List of unique pages view' do
     subject(:parse_unique_visits) { log_parser.parse }
 
-    let(:log_path) { 'spec/fixtures/webserver_fixture.log' }
     let(:output_presenter) do
       LogParser::UniqVisitsOutputPresenter
     end
@@ -71,13 +62,13 @@ describe LogParser do
         expect { parse_unique_visits }.to raise_error LogParser::FileMissingError
       end
     end
+  end
 
-    context 'Given no argument supplied' do
-      let(:log_path) { nil }
+  context 'Given no argument supplied' do
+    let(:log_path) { nil }
 
-      it 'raises an ArgumentError' do
-        expect { LogParser.new }.to raise_error ArgumentError
-      end
+    it 'raises an ArgumentError' do
+      expect { LogParser.new }.to raise_error ArgumentError
     end
   end
 end
