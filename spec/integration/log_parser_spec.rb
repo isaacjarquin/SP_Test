@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require_relative '../../ruby_app/log_parser.rb'
+
 describe LogParser do
   let(:log_parser) { LogParser.new(log_path) }
 
