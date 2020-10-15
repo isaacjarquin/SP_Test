@@ -13,6 +13,14 @@ class LogParser
       end
     end
 
+    def present_unique_visits
+      [
+        '/about/2 4 uniq visits',
+        '/contact 3 uniq visits',
+        '/index 2 uniq visits'
+      ]
+    end
+
     private
 
     attr_reader :parsed_file

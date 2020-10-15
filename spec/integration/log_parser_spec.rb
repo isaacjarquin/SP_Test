@@ -42,18 +42,17 @@ describe LogParser do
     subject(:parse_unique_visits) { log_parser.parse_unique_visits }
 
     let(:log_path) { 'spec/fixtures/webserver_fixture.log' }
-    let(:output_formatter) { LogParser::UniqPageViewsOutputFormatter }
 
-    let(:ordered_visits) do
+    let(:ordered_uniq_visits) do
       [
-        '/about/2 5 uniq visits',
-        '/contact 4 uniq visits',
-        '/index 3 uniq visits'
+        '/about/2 4 uniq visits',
+        '/contact 3 uniq visits',
+        '/index 2 uniq visits'
       ]
     end
 
     it 'returns a unique list order from higher to lower' do
-      expect(parse_unique_visits).to eql(ordered_visits)
+      expect(parse_unique_visits).to eql(ordered_uniq_visits)
     end
 
     context 'Given file does not exist' do

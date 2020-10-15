@@ -19,11 +19,7 @@ class LogParser
   def parse_unique_visits
     raise FileMissingError unless File.exist?(log_path)
 
-    [
-      '/about/2 5 uniq visits',
-      '/contact 4 uniq visits',
-      '/index 3 uniq visits'
-    ]
+    OutputPresenter.new(parsed_file).present_unique_visits
   end
 
   private
