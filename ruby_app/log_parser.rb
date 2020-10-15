@@ -13,10 +13,13 @@ class LogParser
   def parse
     raise FileMissingError unless File.exist?(log_path)
 
-    OutputPresenter.new().present
+    OutputPresenter.new(parsed_file).present
   end
 
   private
 
   attr_reader :log_path
+
+  def parsed_file
+  end
 end
