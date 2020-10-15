@@ -6,25 +6,20 @@ require_relative 'presenters/output_presenter.rb'
 class LogParser
   class FileMissingError < StandardError; end
 
-  def initialize(log_path)
+  def initialize(log_path, output_formatter)
     @log_path = log_path
+    @output_formatter = output_formatter
   end
 
   def parse
     raise FileMissingError unless File.exist?(log_path)
 
-    OutputPresenter.new(parsed_file).present
-  end
-
-  def parse_unique_visits
-    raise FileMissingError unless File.exist?(log_path)
-
-    OutputPresenter.new(parsed_file).present_unique_visits
+    output_formatter.new(parsed_file).present
   end
 
   private
 
-  attr_reader :log_path
+  attr_reader :log_path, :output_formatter
 
   def parsed_file
     File.readlines(log_path).each(&:rstrip!)

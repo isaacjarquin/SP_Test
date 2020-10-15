@@ -1,14 +1,20 @@
 # frozen_string_literal: true
 
 require_relative '../../ruby_app/log_parser.rb'
+require_relative '../../ruby_app/presenters/total_visits_output_presenter.rb'
+require_relative '../../ruby_app/presenters/uniq_visits_output_presenter.rb'
 
 describe LogParser do
-  let(:log_parser) { LogParser.new(log_path) }
+  let(:log_parser) { LogParser.new(log_path, output_presenter) }
 
   describe 'List of Web page visits' do
     subject(:parse_visits) { log_parser.parse }
 
     let(:log_path) { 'spec/fixtures/webserver_fixture.log' }
+    let(:output_presenter) do
+      LogParser::TotalVisitsOutputPresenter
+    end
+
     let(:ordered_visits) do
       [
         '/about/2 5 visits',
@@ -39,9 +45,12 @@ describe LogParser do
   end
 
   describe 'List of unique pages view' do
-    subject(:parse_unique_visits) { log_parser.parse_unique_visits }
+    subject(:parse_unique_visits) { log_parser.parse }
 
     let(:log_path) { 'spec/fixtures/webserver_fixture.log' }
+    let(:output_presenter) do
+      LogParser::UniqVisitsOutputPresenter
+    end
 
     let(:ordered_uniq_visits) do
       [
