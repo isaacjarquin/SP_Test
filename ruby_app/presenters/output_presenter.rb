@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative './total_visits_output_presenter.rb'
-require_relative './uniq_visits_output_presenter.rb'
-
 class LogParser
   # It presents the expected output into a more human readable output
   class OutputPresenter
@@ -11,15 +8,19 @@ class LogParser
     end
 
     def present
-      ::LogParser::TotalVisitsOutputPresenter.new(parsed_file).present
-    end
-
-    def present_unique_visits
-      ::LogParser::UniqVisitsOutputPresenter.new(parsed_file).present
+      raise NoMethodError, 'Children classes need tp implement the present method'
     end
 
     private
 
     attr_reader :parsed_file
+
+    def output_sorted
+      visited_pages.tally.sort_by { |_key, value| -value }.to_h
+    end
+
+    def visited_pages
+      raise NoMethodError, 'Children classes need tp implement the visited_pages method'
+    end
   end
 end

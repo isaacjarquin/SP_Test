@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
+require_relative 'output_presenter.rb'
+
 class LogParser
   # It presents the expected output into a more human readable output
-  class TotalVisitsOutputPresenter
-    def initialize(parsed_file)
-      @parsed_file = parsed_file
-    end
-
+  class TotalVisitsOutputPresenter < OutputPresenter
     def present
       output_sorted.map do |key, value|
         "#{key} #{value} visits"
@@ -14,12 +12,6 @@ class LogParser
     end
 
     private
-
-    attr_reader :parsed_file
-
-    def output_sorted
-      visited_pages.tally.sort_by { |_key, value| -value }.to_h
-    end
 
     def visited_pages
       parsed_file.map do |line|
