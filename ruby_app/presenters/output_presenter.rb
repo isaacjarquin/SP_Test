@@ -14,16 +14,24 @@ class LogParser
     end
 
     def present_unique_visits
-      [
-        '/about/2 4 uniq visits',
-        '/contact 3 uniq visits',
-        '/index 2 uniq visits'
-      ]
+      output_sorted_uniq_visits.map do |key, value|
+        "#{key} #{value} uniq visits"
+      end
     end
 
     private
 
     attr_reader :parsed_file
+
+    def output_sorted_uniq_visits
+      visited_pages_uniq_visits.tally.sort_by { |_key, value| -value }.to_h
+    end
+
+    def visited_pages_uniq_visits
+      parsed_file.uniq.map do |line|
+        line.split(' ')[0]
+      end
+    end
 
     def output_sorted
       visited_pages.tally.sort_by { |_key, value| -value }.to_h
