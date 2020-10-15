@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './total_visits_output_presenter.rb'
+require_relative './uniq_visits_output_presenter.rb'
 
 class LogParser
   # It presents the expected output into a more human readable output
@@ -14,23 +15,11 @@ class LogParser
     end
 
     def present_unique_visits
-      output_sorted_uniq_visits.map do |key, value|
-        "#{key} #{value} uniq visits"
-      end
+      ::LogParser::UniqVisitsOutputPresenter.new(parsed_file).present
     end
 
     private
 
     attr_reader :parsed_file
-
-    def output_sorted_uniq_visits
-      visited_pages_uniq_visits.tally.sort_by { |_key, value| -value }.to_h
-    end
-
-    def visited_pages_uniq_visits
-      parsed_file.uniq.map do |line|
-        line.split(' ')[0]
-      end
-    end
   end
 end
