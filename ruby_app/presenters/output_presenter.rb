@@ -8,7 +8,7 @@ class LogParser
     end
 
     def present
-      raise NoMethodError, 'Children classes need tp implement the present method'
+      raise NoMethodError, 'Children classes need to implement the present method'
     end
 
     private
@@ -20,7 +20,7 @@ class LogParser
     end
 
     def visited_pages
-      raise NoMethodError, 'Children classes need tp implement the visited_pages method'
+      raise NoMethodError, 'Children classes need to implement the visited_pages method'
     end
   end
 end
