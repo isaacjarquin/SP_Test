@@ -6,7 +6,11 @@ describe LogParser::OutputPresenter do
   }
 
   let(:parsed_file) {
-    File.absolute_path('/spec/fixtures/webserver_fixture.log')
+    File.readlines(file_path).each { |line| line.rstrip! }
+  }
+
+  let(:file_path) {
+    'spec/fixtures/webserver_fixture.log'
   }
 
   let(:presented_results) {

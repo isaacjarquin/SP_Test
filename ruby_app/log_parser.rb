@@ -21,5 +21,6 @@ class LogParser
   attr_reader :log_path
 
   def parsed_file
+    File.readlines(log_path).each { |line| line.rstrip! }
   end
 end
