@@ -16,7 +16,6 @@ class ChildrenWithNoVisitedPagesImplemented < LogParser::OutputPresenter
   end
 end
 
-
 describe LogParser::OutputPresenter do
   let(:parsed_file) do
     File.readlines(file_path).each(&:rstrip!)
@@ -27,26 +26,26 @@ describe LogParser::OutputPresenter do
   end
 
   context 'Given children does not implement present method' do
-    let(:children_with_no_present_implemented) {
+    let(:children_with_no_present_implemented) do
       ChildrenClass.new(parsed_file)
-    }
+    end
 
     it 'raises a NoMethodError' do
-      expect {
+      expect do
         children_with_no_present_implemented.present
-      }.to raise_error NoMethodError, 'Children classes need to implement the present method'
+      end.to raise_error NoMethodError, 'Children classes need to implement the present method'
     end
   end
 
   context 'Given children does not implement visit_pages method' do
-    let(:children_with_no_visited_pages_implemented) {
+    let(:children_with_no_visited_pages_implemented) do
       ChildrenWithNoVisitedPagesImplemented.new(parsed_file)
-    }
+    end
 
     it 'raises a NoMethodError' do
-      expect {
+      expect do
         children_with_no_visited_pages_implemented.present
-      }.to raise_error NoMethodError, 'Children classes need to implement the visited_pages method'
+      end.to raise_error NoMethodError, 'Children classes need to implement the visited_pages method'
     end
   end
 end
